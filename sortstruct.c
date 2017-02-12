@@ -5,6 +5,11 @@
 
 static int _o_count;
 
+int cmpfunc (const void * a, const void * b)
+{
+   return (strcmp(((obj *) a)->name, ((obj *) b)->name ));
+}
+
 void o_add(obj o[], char *name) {
 
     obj *_t;
@@ -34,14 +39,5 @@ void o_print(obj *o) {
 }
 
 void sort_by_name(obj *o) {
-    for (int i=0; i < _o_count; i++) {
-        for (int j=i+1; j < _o_count; j++) {
-            if (strcmp(o[j].name, o[i].name) < 0) {
-                obj tmp;
-                tmp = o[i];
-                o[i] = o[j];
-                o[j] = tmp;
-            }
-        }
-    }
+    qsort(o, _o_count, sizeof(obj), cmpfunc);
 }
